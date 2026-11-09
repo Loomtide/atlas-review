@@ -21,7 +21,7 @@ This verifies local data loading, not every saved provider credential or every h
 
 ## Source checks
 
-- Backend: 2,224 tests passed and 5 skipped, plus the new ZIP export integration regression check passed.
+- Backend: the baseline 2,224 tests passed with 5 skipped. Added ZIP export and Codex stdin-error regression checks. CI exposed an uncaught EPIPE when Codex exits before accepting its auth probe; the probe now handles that pipe error and reports failure without crashing the backend.
 - Frontend: production build and all 178 unit tests passed.
 - MCP server: all 143 tests passed.
 - Fresh-install database initialization passed.

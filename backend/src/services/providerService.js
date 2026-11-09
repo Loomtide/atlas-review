@@ -1819,7 +1819,7 @@ async function validateClaudeCliConnection(provider = null) {
  * Test Codex CLI authentication by running a trivial prompt.
  * Returns true if codex exec succeeds, false if auth fails.
  */
-async function testCodexAuth(codexPath) {
+export async function testCodexAuth(codexPath) {
   const { spawn } = await import('child_process');
   return new Promise((resolve) => {
     const args = ['exec', '--skip-git-repo-check', '-'];
@@ -1842,10 +1842,6 @@ async function testCodexAuth(codexPath) {
     let out = '';
     child.stdout.on('data', (d) => { out += d; });
     child.stderr.on('data', (d) => { err += d; });
-
-    // Send a trivial prompt and close stdin
-    child.stdin.write('Reply with exactly: ok');
-    child.stdin.end();
 
     const timer = setTimeout(() => {
       child.kill('SIGTERM');
@@ -1881,6 +1877,15 @@ async function testCodexAuth(codexPath) {
       clearTimeout(timer);
       resolve(false);
     });
+
+    // A CLI can exit before reading its prompt, including during failed auth.
+    // Handle the pipe error so it cannot become an uncaught backend exception.
+    child.stdin.on('error', () => {
+      clearTimeout(timer);
+      resolve(false);
+      child.kill('SIGTERM');
+    });
+    child.stdin.end('Reply with exactly: ok');
   });
 }
 
