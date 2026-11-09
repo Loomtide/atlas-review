@@ -22,17 +22,17 @@ Local-first AI code review with guided code walkthroughs, an organized PR inbox,
 
 ## Install
 
-| Platform | Download |
-| --- | --- |
-| macOS, Apple Silicon | [Download DMG](https://github.com/Loomtide/atlas-review/releases/latest/download/AtlasReview-macos-aarch64.dmg) |
-| macOS, Intel | [Download ZIP](https://github.com/Loomtide/atlas-review/releases/latest/download/AtlasReview-macos-x86_64.zip) |
-| Windows, x64 | [Download installer](https://github.com/Loomtide/atlas-review/releases/latest/download/AtlasReview-windows-x64-setup.exe) |
+| Platform | Version | Download |
+| --- | --- | --- |
+| macOS, Apple Silicon | 0.25.27 | [Download DMG](https://github.com/Loomtide/atlas-review/releases/latest/download/AtlasReview-macos-aarch64.dmg) |
+| macOS, Intel | 0.25.26 | [Download ZIP](https://github.com/Loomtide/atlas-review/releases/latest/download/AtlasReview-macos-x86_64.zip) |
+| Windows, x64 | 0.25.26 | [Download installer](https://github.com/Loomtide/atlas-review/releases/latest/download/AtlasReview-windows-x64-setup.exe) |
 
 1. Install and open Atlas Review.
 2. Configure your AI provider or supported authenticated CLI in **Settings**.
 3. Import a local Git repository and review a branch. Connect GitHub to bring in pull requests.
 
-The current 0.25.26 release installs as **AtlasEngine**. Version 0.25.27 changes the display name to **AtlasReview** while preserving existing data paths and the application identifier. Mac builds are signed and notarized. Windows installers do not currently have an Authenticode certificate and may show a SmartScreen prompt. Linux desktop packages are not currently published. See [release notes and checksums](https://github.com/Loomtide/atlas-review/releases/latest).
+The Apple Silicon 0.25.27 build installs as **AtlasReview**, preserving existing data paths and the application identifier. Intel Mac and Windows downloads retain the unchanged 0.25.26 **AtlasEngine** builds. Download the Apple Silicon update manually: the shared automatic-update feed remains on 0.25.26 until platform versions align. Mac builds are signed and notarized. Windows installers do not currently have an Authenticode certificate and may show a SmartScreen prompt. Linux desktop packages are not currently published. See [release notes and checksums](https://github.com/Loomtide/atlas-review/releases/latest).
 
 ## Understand the change with code walkthroughs
 

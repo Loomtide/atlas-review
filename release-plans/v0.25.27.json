@@ -1,0 +1,75 @@
+{
+  "mode": "prebuilt-platform-release",
+  "release": "v0.25.27",
+  "previousRelease": "v0.25.26",
+  "automaticUpdates": "retain-previous-manifest",
+  "platforms": {
+    "darwin-aarch64": {
+      "origin": "current",
+      "version": "0.25.27",
+      "sourceCommit": "a55f5bd5d1b0545f053776e4ccf0239b6e654be1",
+      "files": [
+        {
+          "name": "AtlasReview-0.25.27-macos-aarch64.dmg",
+          "aliases": [
+            "AtlasReview-macos-aarch64.dmg"
+          ]
+        },
+        {
+          "name": "AtlasReview_0.25.27_aarch64.app.tar.gz",
+          "updater": true
+        }
+      ],
+      "notices": [
+        "DEPENDENCY_NOTICES-macOS-ARM64.json",
+        "RUST_DEPENDENCY_NOTICES-macOS-ARM64.json",
+        "Node-LICENSE-macOS-ARM64.txt"
+      ]
+    },
+    "darwin-x86_64": {
+      "origin": "previous",
+      "version": "0.25.26",
+      "sourceCommit": "8e457674dab5fa137ca32228f2f1943a34d6b8dd",
+      "files": [
+        {
+          "name": "AtlasEngine-0.25.26-macos-x86_64.zip",
+          "aliases": [
+            "AtlasReview-macos-x86_64.zip"
+          ]
+        },
+        {
+          "name": "AtlasEngine_0.25.26_x86_64.app.tar.gz",
+          "updater": true
+        }
+      ],
+      "notices": [
+        "DEPENDENCY_NOTICES-macOS-X64.json",
+        "RUST_DEPENDENCY_NOTICES-macOS-X64.json"
+      ]
+    },
+    "windows-x86_64": {
+      "origin": "previous",
+      "version": "0.25.26",
+      "sourceCommit": "8e457674dab5fa137ca32228f2f1943a34d6b8dd",
+      "files": [
+        {
+          "name": "AtlasEngine-0.25.26-windows-x64-setup.exe",
+          "aliases": [
+            "AtlasReview-windows-x64-setup.exe"
+          ],
+          "updater": true
+        },
+        {
+          "name": "AtlasEngine-0.25.26-windows-x64.msi",
+          "aliases": [
+            "AtlasReview-windows-x64.msi"
+          ]
+        }
+      ],
+      "notices": [
+        "DEPENDENCY_NOTICES-Windows-X64.json",
+        "RUST_DEPENDENCY_NOTICES-Windows-X64.json"
+      ]
+    }
+  }
+}

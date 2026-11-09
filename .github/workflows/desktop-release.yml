@@ -19,6 +19,8 @@ env:
 
 jobs:
   validate:
+    outputs:
+      prebuilt: ${{ steps.version.outputs.prebuilt }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
@@ -26,12 +28,14 @@ jobs:
         with:
           node-version: '22'
       - name: Require a matching version tag
+        id: version
         run: node scripts/validate-release.mjs
 
   # =============================================================================
   # macOS Build Job
   # =============================================================================
   build-macos:
+    if: needs.validate.outputs.prebuilt != 'true'
     needs: validate
     strategy:
       matrix:
@@ -278,6 +282,7 @@ jobs:
   # Windows Build Job
   # =============================================================================
   build-windows:
+    if: needs.validate.outputs.prebuilt != 'true'
     needs: validate
     runs-on: windows-latest
 
@@ -451,6 +456,7 @@ jobs:
           retention-days: 7
 
   release:
+    if: needs.validate.outputs.prebuilt != 'true'
     concurrency:
       group: desktop-release-publish
       cancel-in-progress: false
