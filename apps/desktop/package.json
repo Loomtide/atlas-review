@@ -1,8 +1,8 @@
 {
   "name": "atlasengine-desktop",
-  "version": "0.25.26",
+  "version": "0.25.27",
   "private": true,
-  "description": "AtlasEngine Desktop - Native Tauri wrapper for AtlasEngine",
+  "description": "AtlasReview desktop application",
   "type": "module",
   "scripts": {
     "stop-target-processes": "node scripts/stop-target-processes.js",
@@ -33,7 +33,7 @@
     "build:unsigned": "tauri build --config src-tauri/tauri.unsigned.conf.json"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^2.0.0",
+    "@tauri-apps/cli": "2.10.0",
     "tar": "^7.0.0"
   },
   "dependencies": {

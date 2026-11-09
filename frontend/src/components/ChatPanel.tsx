@@ -2395,7 +2395,7 @@ function ChatPanel({
         }
 
         pushSystemMessage(
-          `Command /${commandName} is not supported in AtlasEngine chat yet.`
+          `Command /${commandName} is not supported in AtlasReview chat yet.`
         );
         setInput('');
         onClearUiSelection?.();

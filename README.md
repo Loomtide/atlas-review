@@ -32,7 +32,7 @@ Local-first AI code review with guided code walkthroughs, an organized PR inbox,
 2. Configure your AI provider or supported authenticated CLI in **Settings**.
 3. Import a local Git repository and review a branch. Connect GitHub to bring in pull requests.
 
-The installed app retains the **AtlasEngine** name and data paths for upgrade compatibility. Mac builds are signed and notarized. Windows installers do not currently have an Authenticode certificate and may show a SmartScreen prompt. Linux desktop packages are not currently published. See [release notes and checksums](https://github.com/Loomtide/atlas-review/releases/latest).
+The current 0.25.26 release installs as **AtlasEngine**. Version 0.25.27 changes the display name to **AtlasReview** while preserving existing data paths and the application identifier. Mac builds are signed and notarized. Windows installers do not currently have an Authenticode certificate and may show a SmartScreen prompt. Linux desktop packages are not currently published. See [release notes and checksums](https://github.com/Loomtide/atlas-review/releases/latest).
 
 ## Understand the change with code walkthroughs
 

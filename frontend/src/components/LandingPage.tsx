@@ -1,6 +1,6 @@
 /**
  * LandingPage Component
- * Public-facing marketing page for AtlasEngine.
+ * Public-facing marketing page for AtlasReview.
  * Hero section, features grid, product visualization, pricing, download CTA, footer.
  */
 
@@ -31,7 +31,7 @@ function LandingPage({ onOpenApp }: LandingPageProps) {
                 />
               </svg>
             </div>
-            <span className="text-lg font-bold text-content">AtlasEngine</span>
+            <span className="text-lg font-bold text-content">AtlasReview</span>
           </div>
 
           {/* Nav Links */}
@@ -497,12 +497,12 @@ function LandingPage({ onOpenApp }: LandingPageProps) {
             Ready to trust your AI-generated code?
           </h2>
           <p className="text-lg text-content-secondary mb-10 max-w-xl mx-auto">
-            Download AtlasEngine and start reviewing AI changes in minutes.
+            Download AtlasReview and start reviewing AI changes in minutes.
           </p>
 
           <div className="flex flex-col items-center gap-4">
             <a
-              href="https://github.com/AtlasEngine/AtlasEngineMVP/releases/latest"
+              href="https://github.com/Loomtide/atlas-review/releases/latest"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-content font-semibold rounded-xl transition-all shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 text-lg"
@@ -555,7 +555,7 @@ function LandingPage({ onOpenApp }: LandingPageProps) {
             {/* Links */}
             <div className="flex items-center gap-6">
               <a
-                href="https://github.com/AtlasEngine/AtlasEngineMVP"
+                href="https://github.com/Loomtide/atlas-review"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-content-tertiary hover:text-content transition-colors"
@@ -576,7 +576,7 @@ function LandingPage({ onOpenApp }: LandingPageProps) {
 
           <div className="mt-8 text-center">
             <p className="text-xs text-content-tertiary">
-              Built by AtlasEngine &middot; &copy; {new Date().getFullYear()} All rights reserved.
+              Built by AtlasReview &middot; &copy; {new Date().getFullYear()} All rights reserved.
             </p>
           </div>
         </div>

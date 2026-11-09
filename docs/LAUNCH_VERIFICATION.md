@@ -1,5 +1,7 @@
 # Open source launch verification
 
+This page records the historical 0.25.26 launch. See DEPENDENCY_STATUS.md for current dependency results and MAC_VERIFICATION_0.25.27.md for the next Mac build.
+
 Atlas Review is prepared from the working source snapshot identified in SOURCE_MANIFEST.md. The first public installer release is 0.25.26. Existing application identifiers, updater verification key, and data paths are preserved.
 
 ## Source and local checks

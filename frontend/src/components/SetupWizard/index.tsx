@@ -140,7 +140,7 @@ export function SetupWizard({ onComplete }: SetupWizardProps) {
 
       {/* Version */}
       <div className="mt-8 text-sm" style={{ color: 'var(--text-tertiary)' }}>
-        AtlasEngine Desktop
+        AtlasReview Desktop
       </div>
       </div>
     </div>

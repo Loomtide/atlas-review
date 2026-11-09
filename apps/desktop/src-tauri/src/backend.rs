@@ -6,9 +6,9 @@
 //! - Gracefully shuts down on app close
 //! - Provides IPC commands for the frontend to query backend status
 
-use serde::Serialize;
 #[cfg(target_os = "windows")]
 use serde::Deserialize;
+use serde::Serialize;
 use std::fs;
 use std::io::{BufRead, BufReader};
 use std::net::TcpListener;
@@ -966,10 +966,24 @@ fn remove_junction_or_dir(path: &Path) -> Result<(), String> {
     fs::remove_dir_all(path).map_err(|e| format!("Failed to remove {:?}: {}", path, e))
 }
 
-/// Start the backend process
-///
-/// Locates the bundled Node.js binary and backend code, then spawns
-/// the process with appropriate environment variables.
+/// Resolve the desktop profile, including an explicit isolated test profile.
+pub(crate) fn desktop_data_dir<R: Runtime>(app: &AppHandle<R>) -> Result<PathBuf, String> {
+    match std::env::var_os("ATLAS_DATA_DIR") {
+        Some(value) => {
+            let path = PathBuf::from(value);
+            if !path.is_absolute() {
+                return Err("ATLAS_DATA_DIR must be an absolute path".into());
+            }
+            Ok(path)
+        }
+        None => app
+            .path()
+            .app_data_dir()
+            .map_err(|e| format!("Failed to get app data directory: {}", e)),
+    }
+}
+
+/// Start the bundled backend using the selected desktop profile.
 pub fn start_backend<R: Runtime>(app: &AppHandle<R>) -> Result<u16, String> {
     let startup_started = Instant::now();
     let startup_timeout_budget = backend_startup_timeout_budget();
@@ -1044,10 +1058,7 @@ pub fn start_backend<R: Runtime>(app: &AppHandle<R>) -> Result<u16, String> {
     log::info!("Backend working directory: {:?}", backend_dir);
 
     // Ensure app data/logs directories exist and pass to backend
-    let app_data_dir_raw = app
-        .path()
-        .app_data_dir()
-        .map_err(|e| format!("Failed to get app data directory: {}", e))?;
+    let app_data_dir_raw = desktop_data_dir(app)?;
     let app_data_dir = dunce::simplified(&app_data_dir_raw).to_path_buf();
     let logs_dir = app_data_dir.join("logs");
     if let Err(e) = fs::create_dir_all(&logs_dir) {
@@ -1443,7 +1454,7 @@ pub fn stop_backend<R: Runtime>(app: &AppHandle<R>) -> Result<(), String> {
     // Best-effort: remove the discovery file so downstream consumers can
     // distinguish "app running" from "app not running". Do this before the
     // state lock so a stuck lock cannot keep a stale file around.
-    if let Ok(app_data_dir_raw) = app.path().app_data_dir() {
+    if let Ok(app_data_dir_raw) = desktop_data_dir(app) {
         let app_data_dir = dunce::simplified(&app_data_dir_raw).to_path_buf();
         crate::discovery::remove(&app_data_dir);
     }

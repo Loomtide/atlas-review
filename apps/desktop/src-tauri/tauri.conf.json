@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "AtlasEngine",
-  "version": "0.25.26",
+  "productName": "AtlasReview",
+  "version": "0.25.27",
   "identifier": "com.atlasengine.desktop",
   "build": {
     "frontendDist": "../../../frontend/dist",
@@ -36,17 +36,22 @@
     ],
     "windows": {
       "nsis": {
-        "installerHooks": "./windows/hooks.nsh"
+        "installerHooks": "./windows/hooks.nsh",
+        "template": "./windows/installer.nsi"
+      },
+      "wix": {
+        "upgradeCode": "cd5cbea9-357e-5ffc-800c-5ed5759fd6c6"
       }
     },
     "macOS": {
       "entitlements": "Entitlements.plist"
-    }
+    },
+    "homepage": "https://loomtide.ai/atlasreview"
   },
   "app": {
     "windows": [
       {
-        "title": "AtlasEngine",
+        "title": "AtlasReview",
         "width": 1400,
         "height": 900,
         "minWidth": 800,

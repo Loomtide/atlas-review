@@ -1,6 +1,6 @@
 # Release maintenance
 
-Official releases are built from version tags in this repository. The application bundle remains AtlasEngine for upgrade compatibility; public download aliases use AtlasReview. Keep package.json, its lock, Cargo.toml, Cargo.lock, and tauri.conf.json versions aligned. Use increasing versions; do not reset the version while supporting existing installations.
+Official releases are built from version tags in this repository. Version 0.25.27 displays AtlasReview and produces AtlasReview.app. The legacy identifier, data paths, keychain service, and updater verification key remain unchanged. Keep package.json, its lock, Cargo.toml, Cargo.lock, and tauri.conf.json versions aligned. Use increasing versions; do not reset the version while supporting existing installations.
 
 ## Credentials
 
@@ -24,3 +24,13 @@ Releases are assembled as drafts so failed or partial builds cannot advance the 
 Old builds use `AvinashP/AtlasEngineRelease` and its stable manifest. Keep that repository and manifest available. Only after testing an upgrade with the preserved updater key should maintainers update the legacy manifest to reference the new signed release assets. This compatibility publication is a separate maintainer action with access to the old repository. Never delete the old feed during the launch.
 
 A legacy release mirrored for download continuity must explicitly identify its origin and must not claim to have been built from the new curated source tree.
+
+## Rename compatibility in 0.25.27
+
+On Mac, the updater replaces the contents of the installed app at its existing path. It does not rename an existing AtlasEngine.app directory. A manual installation of AtlasReview.app changes the Finder name. Quit the old app first and keep only one active copy. Both names use the same existing profile; do not delete Application Support when replacing the application.
+
+Windows MSI retains upgrade code `cd5cbea9-357e-5ffc-800c-5ed5759fd6c6`, derived from the previous product name. NSIS uses the pinned Tauri CLI 2.10.0 template in `apps/desktop/src-tauri/windows/installer.nsi`, retaining the AtlasEngine registry keys while displaying AtlasReview. Review this template against upstream when upgrading the CLI. The template is distributed under its included MIT license. Old shortcuts pointing at the same installation are removed after installation.
+
+Before publishing, test both EXE and MSI fresh installations and upgrades from 0.25.26 on Windows. Confirm one installed-app entry, working shortcuts, preserved projects/provider settings, backend shutdown, and updater behavior. These checks require a Windows machine.
+
+The local publish command creates a draft in Loomtide/atlas-review using the existing source tag and all three platform artifacts. It never creates a replacement source history, pushes source commits, or advances the stable feed. Prefer the tagged GitHub Actions workflow for official builds.

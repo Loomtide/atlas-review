@@ -106,7 +106,7 @@ export function AddProjectStep({ onComplete, onBack, onSkip }: AddProjectStepPro
         </div>
         <h2 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>Add Your First Project</h2>
         <p className="mb-6" style={{ color: 'var(--text-secondary)' }}>
-          Point AtlasEngine at a codebase to start AI review.
+          Point AtlasReview at a codebase to start AI review.
         </p>
 
         <div className="space-y-3 mb-6 max-w-2xl mx-auto">

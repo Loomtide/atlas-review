@@ -1,25 +1,15 @@
 # Dependency audit status
 
-Audit date: 2026-11-06. These results describe the checked lockfiles, not a guarantee that the application has no vulnerabilities.
+Audit date: 2026-11-09. These results describe the checked lockfiles and supported targets, not a guarantee that the application has no vulnerabilities.
 
-High and critical advisories were addressed before launch. Moderate advisories remain in retained legacy and development dependency chains. Avoid unrelated major dependency migrations during the launch; review these remaining advisories when maintaining those components.
+Backend, frontend, MCP server, and desktop npm audits report zero advisories, including development dependencies. Multer is updated to the patched 2.x series, UUID to 11.1.1, and Archiver to 8.x. ZIP export uses the new ZipArchive API and has an integration regression check. Overrides for Glob and Minimatch apply only to the affected newer major versions, retaining the older API expected by legacy development tools. Rust bytes is updated to 1.11.1.
 
-| Package | Severity | Dependency scope | Advisory |
-| --- | --- | --- | --- |
-| backend/archiver | moderate | Runtime or retained shared module | Transitive dependency; inspect npm audit for the chain |
-| backend/archiver-utils | moderate | Runtime or retained shared module | Transitive dependency; inspect npm audit for the chain |
-| backend/dockerode | moderate | Runtime or retained shared module | Transitive dependency; inspect npm audit for the chain |
-| backend/glob | moderate | Runtime or retained shared module | [Glob: AbortSignal cancellation bypass allows post-timeout filesystem traversal](https://github.com/advisories/GHSA-3g3m-2fjr-6pw4) |
-| backend/minimatch | moderate | Runtime or retained shared module | [minimatch has potential denial of service via globparts amplification](https://github.com/advisories/GHSA-g3hv-75wg-m249) |
-| backend/uuid | moderate | Runtime or retained shared module | [uuid: Missing buffer bounds check in v3/v5/v6 when buf is provided](https://github.com/advisories/GHSA-w5hq-g745-h8pq) |
-| backend/zip-stream | moderate | Runtime or retained shared module | Transitive dependency; inspect npm audit for the chain |
-| frontend/@typescript-eslint/eslint-plugin | moderate | Development | Transitive dependency; inspect npm audit for the chain |
-| frontend/@typescript-eslint/parser | moderate | Development | Transitive dependency; inspect npm audit for the chain |
-| frontend/@typescript-eslint/type-utils | moderate | Development | Transitive dependency; inspect npm audit for the chain |
-| frontend/@typescript-eslint/typescript-estree | moderate | Development | Transitive dependency; inspect npm audit for the chain |
-| frontend/@typescript-eslint/utils | moderate | Development | Transitive dependency; inspect npm audit for the chain |
-| frontend/glob | moderate | Development | [Glob: AbortSignal cancellation bypass allows post-timeout filesystem traversal](https://github.com/advisories/GHSA-3g3m-2fjr-6pw4) |
-| frontend/minimatch | moderate | Development | [minimatch has potential denial of service via globparts amplification](https://github.com/advisories/GHSA-g3hv-75wg-m249) |
-| frontend/sucrase | moderate | Development | Transitive dependency; inspect npm audit for the chain |
+## Remaining upstream Linux advisory
 
-Run `npm audit --prefix backend` and `npm audit --prefix frontend` to inspect current advisories. CI rejects high or critical production dependency advisories. The retained cloud/builder dependencies are not required infrastructure for local review.
+Tauri 2.x depends on the GTK 0.18 family on Linux, including glib 0.18.5. [RUSTSEC-2024-0429](https://rustsec.org/advisories/RUSTSEC-2024-0429.html) affects glib::VariantStrIter and is fixed in glib 0.20.0. The GTK dependencies require glib 0.18, so forcing 0.20 into Cargo.lock would not fix that dependency chain and could break compilation. No unsupported dependency replacement is applied.
+
+The supported releases are Mac and Windows. Neither target includes glib. Linux builds remain outside the supported release matrix until the upstream GTK dependency chain can be upgraded or a reviewed backport is adopted. The GitHub glib alert remains open and documented.
+
+## Recheck
+
+Run `npm audit --prefix backend`, `npm audit --prefix frontend`, `npm audit --prefix mcp-review-server`, and `npm audit --prefix apps/desktop`. Use `cargo tree --manifest-path apps/desktop/src-tauri/Cargo.toml --target all -i glib` to inspect the upstream Linux chain. Audit results can change as new advisories are published.

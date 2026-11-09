@@ -16,7 +16,7 @@ if (process.platform !== 'win32') {
 const powershellScript = `
 $ErrorActionPreference = 'Stop'
 $targetDir = [System.IO.Path]::GetFullPath('${tauriTargetDir.replace(/\\/g, '\\\\')}')
-$allowedNames = @('AtlasEngine.exe', 'atlasengine-desktop.exe', 'node.exe')
+$allowedNames = @('AtlasReview.exe', 'AtlasEngine.exe', 'atlasengine-desktop.exe', 'node.exe')
 $processes = Get-CimInstance Win32_Process | Where-Object {
   $_.ExecutablePath -and
   $allowedNames -contains $_.Name -and

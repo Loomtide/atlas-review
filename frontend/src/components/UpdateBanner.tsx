@@ -97,7 +97,7 @@ export function UpdateBanner() {
     : isReady
       ? 'Update ready'
       : isUpToDate
-        ? 'AtlasEngine is up to date'
+        ? 'AtlasReview is up to date'
       : isDownloading
         ? 'Installing update'
         : `Update available: v${updateInfo?.version ?? ''}`;
@@ -105,7 +105,7 @@ export function UpdateBanner() {
   const description = isError
     ? (error || 'The update could not be downloaded right now.')
     : isReady
-      ? 'Restart AtlasEngine to finish applying the update.'
+      ? 'Restart AtlasReview to finish applying the update.'
       : isUpToDate
         ? 'You already have the latest desktop build installed.'
       : isDownloading

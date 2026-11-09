@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Generate Tauri v2 update manifest for AtlasEngine Desktop
+ * Generate Tauri v2 update manifest for AtlasReview Desktop
  *
  * Usage:
  *   node scripts/generate-update-manifest.js --version 0.19.1 --channel stable
@@ -13,13 +13,13 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 
 const PLATFORMS = ['darwin-aarch64', 'darwin-x86_64', 'windows-x86_64', 'linux-x86_64'];
 
 function printHelp() {
   console.log(`
-AtlasEngine Update Manifest Generator
+AtlasReview Update Manifest Generator
 
 Usage:
   node scripts/generate-update-manifest.js [options]
@@ -28,7 +28,7 @@ Options:
   --version, -v       Version string (e.g., 0.19.1, 0.20.0-beta.1)
   --notes, -n         Release notes (can be multiline with \\n)
   --channel, -c       Update channel: stable, beta, or test (default: stable)
-  --base-url          Base URL for artifacts (default: https://atlasengine.dev/updates)
+  --base-url          Base URL for artifacts (default: https://github.com/Loomtide/atlas-review/releases/latest/download)
   --github-release-url  GitHub Release URL for direct artifact downloads
                         (e.g., https://github.com/owner/repo/releases/download/v0.19.0)
   --artifacts         Path to directory containing build artifacts
@@ -63,7 +63,7 @@ function parseArgs(args) {
     version: null,
     notes: '',
     channel: 'stable',
-    baseUrl: 'https://atlasengine.dev/updates',
+    baseUrl: 'https://github.com/Loomtide/atlas-review/releases/latest/download',
     githubReleaseUrl: null,
     artifacts: null,
     output: null,
@@ -130,11 +130,11 @@ function getArtifactFilename(platform, version) {
   const v = version;
   switch (platform) {
     case 'darwin-aarch64':
-      return `AtlasEngine_${v}_aarch64.app.tar.gz`;
+      return `AtlasReview_${v}_aarch64.app.tar.gz`;
     case 'darwin-x86_64':
-      return `AtlasEngine_${v}_x86_64.app.tar.gz`;
+      return `AtlasReview_${v}_x86_64.app.tar.gz`;
     case 'windows-x86_64':
-      return `AtlasEngine-${v}-windows-x64-setup.exe`;
+      return `AtlasReview-${v}-windows-x64-setup.exe`;
     case 'linux-x86_64':
       return `atlasengine_${v}_amd64.AppImage.tar.gz`;
     default:
@@ -158,31 +158,11 @@ function signArtifact(artifactPath) {
   const sigPath = `${artifactPath}.sig`;
 
   try {
-    let keyArg;
-    let tempKeyFile = null;
-
-    if (privateKeyPath) {
-      // Use path directly if provided
-      keyArg = privateKeyPath;
-    } else {
-      // Write key to temp file to avoid command-line escaping issues with newlines
-      const os = require('os');
-      tempKeyFile = path.join(os.tmpdir(), `.tauri_key_${Date.now()}`);
-      fs.writeFileSync(tempKeyFile, privateKeyEnv, { mode: 0o600 });
-      keyArg = tempKeyFile;
-    }
-
-    try {
-      execSync(
-        `tauri signer sign -k "${keyArg}" "${artifactPath}"`,
-        { stdio: 'pipe' }
-      );
-    } finally {
-      // Clean up temp key file
-      if (tempKeyFile && fs.existsSync(tempKeyFile)) {
-        fs.unlinkSync(tempKeyFile);
-      }
-    }
+    // Pass signing inputs through the environment without shell interpolation.
+    execFileSync('tauri', ['signer', 'sign', artifactPath], {
+      stdio: 'pipe',
+      env: process.env,
+    });
 
     if (fs.existsSync(sigPath)) {
       return fs.readFileSync(sigPath, 'utf8').trim();

@@ -466,62 +466,62 @@ function collectArtifacts(config, version, stagingDir) {
   const copied = [];
 
   if (config.platformName === 'macos-aarch64') {
-    const dmgSource = join(config.bundleDir, 'dmg', `AtlasEngine_${version}_aarch64.dmg`);
-    if (copyIfExists(dmgSource, join(stagingDir, `AtlasEngine-${version}-macos-aarch64.dmg`))) {
-      copied.push(`AtlasEngine-${version}-macos-aarch64.dmg`);
+    const dmgSource = join(config.bundleDir, 'dmg', `AtlasReview_${version}_aarch64.dmg`);
+    if (copyIfExists(dmgSource, join(stagingDir, `AtlasReview-${version}-macos-aarch64.dmg`))) {
+      copied.push(`AtlasReview-${version}-macos-aarch64.dmg`);
     }
 
-    const updaterSource = join(config.bundleDir, 'macos', `AtlasEngine.app.tar.gz`);
-    if (copyIfExists(updaterSource, join(stagingDir, `AtlasEngine_${version}_aarch64.app.tar.gz`))) {
-      copied.push(`AtlasEngine_${version}_aarch64.app.tar.gz`);
+    const updaterSource = join(config.bundleDir, 'macos', `AtlasReview.app.tar.gz`);
+    if (copyIfExists(updaterSource, join(stagingDir, `AtlasReview_${version}_aarch64.app.tar.gz`))) {
+      copied.push(`AtlasReview_${version}_aarch64.app.tar.gz`);
     }
 
-    const updaterSigSource = join(config.bundleDir, 'macos', `AtlasEngine.app.tar.gz.sig`);
-    if (copyIfExists(updaterSigSource, join(stagingDir, `AtlasEngine_${version}_aarch64.app.tar.gz.sig`))) {
-      copied.push(`AtlasEngine_${version}_aarch64.app.tar.gz.sig`);
+    const updaterSigSource = join(config.bundleDir, 'macos', `AtlasReview.app.tar.gz.sig`);
+    if (copyIfExists(updaterSigSource, join(stagingDir, `AtlasReview_${version}_aarch64.app.tar.gz.sig`))) {
+      copied.push(`AtlasReview_${version}_aarch64.app.tar.gz.sig`);
     }
   } else if (config.platformName === 'macos-x86_64') {
-    const appBundle = join(config.bundleDir, 'macos', 'AtlasEngine.app');
-    const zipOutput = join(stagingDir, `AtlasEngine-${version}-macos-x86_64.zip`);
+    const appBundle = join(config.bundleDir, 'macos', 'AtlasReview.app');
+    const zipOutput = join(stagingDir, `AtlasReview-${version}-macos-x86_64.zip`);
     if (existsSync(appBundle)) {
       run('ditto', ['-c', '-k', '--sequesterRsrc', '--keepParent', appBundle, zipOutput], {
         cwd: desktopDir,
       });
-      copied.push(`AtlasEngine-${version}-macos-x86_64.zip`);
+      copied.push(`AtlasReview-${version}-macos-x86_64.zip`);
     }
 
-    const updaterSource = join(config.bundleDir, 'macos', `AtlasEngine.app.tar.gz`);
-    if (copyIfExists(updaterSource, join(stagingDir, `AtlasEngine_${version}_x86_64.app.tar.gz`))) {
-      copied.push(`AtlasEngine_${version}_x86_64.app.tar.gz`);
+    const updaterSource = join(config.bundleDir, 'macos', `AtlasReview.app.tar.gz`);
+    if (copyIfExists(updaterSource, join(stagingDir, `AtlasReview_${version}_x86_64.app.tar.gz`))) {
+      copied.push(`AtlasReview_${version}_x86_64.app.tar.gz`);
     }
 
-    const updaterSigSource = join(config.bundleDir, 'macos', `AtlasEngine.app.tar.gz.sig`);
-    if (copyIfExists(updaterSigSource, join(stagingDir, `AtlasEngine_${version}_x86_64.app.tar.gz.sig`))) {
-      copied.push(`AtlasEngine_${version}_x86_64.app.tar.gz.sig`);
+    const updaterSigSource = join(config.bundleDir, 'macos', `AtlasReview.app.tar.gz.sig`);
+    if (copyIfExists(updaterSigSource, join(stagingDir, `AtlasReview_${version}_x86_64.app.tar.gz.sig`))) {
+      copied.push(`AtlasReview_${version}_x86_64.app.tar.gz.sig`);
     }
   } else if (config.platformName === 'windows-x86_64') {
     const nsisDir = join(config.bundleDir, 'nsis');
     const msiDir = join(config.bundleDir, 'msi');
 
     copyIfExists(
-      join(nsisDir, `AtlasEngine_${version}_x64-setup.exe`),
-      join(stagingDir, `AtlasEngine-${version}-windows-x64-setup.exe`)
-    ) && copied.push(`AtlasEngine-${version}-windows-x64-setup.exe`);
+      join(nsisDir, `AtlasReview_${version}_x64-setup.exe`),
+      join(stagingDir, `AtlasReview-${version}-windows-x64-setup.exe`)
+    ) && copied.push(`AtlasReview-${version}-windows-x64-setup.exe`);
 
     copyIfExists(
-      join(msiDir, `AtlasEngine_${version}_x64_en-US.msi`),
-      join(stagingDir, `AtlasEngine-${version}-windows-x64.msi`)
-    ) && copied.push(`AtlasEngine-${version}-windows-x64.msi`);
+      join(msiDir, `AtlasReview_${version}_x64_en-US.msi`),
+      join(stagingDir, `AtlasReview-${version}-windows-x64.msi`)
+    ) && copied.push(`AtlasReview-${version}-windows-x64.msi`);
 
     copyIfExists(
-      join(nsisDir, `AtlasEngine_${version}_x64-setup.exe`),
-      join(stagingDir, `AtlasEngine-${version}-windows-x64-setup.exe`)
-    ) && copied.push(`AtlasEngine-${version}-windows-x64-setup.exe`);
+      join(nsisDir, `AtlasReview_${version}_x64-setup.exe`),
+      join(stagingDir, `AtlasReview-${version}-windows-x64-setup.exe`)
+    ) && copied.push(`AtlasReview-${version}-windows-x64-setup.exe`);
 
     copyIfExists(
-      join(nsisDir, `AtlasEngine_${version}_x64-setup.exe.sig`),
-      join(stagingDir, `AtlasEngine-${version}-windows-x64-setup.exe.sig`)
-    ) && copied.push(`AtlasEngine-${version}-windows-x64-setup.exe.sig`);
+      join(nsisDir, `AtlasReview_${version}_x64-setup.exe.sig`),
+      join(stagingDir, `AtlasReview-${version}-windows-x64-setup.exe.sig`)
+    ) && copied.push(`AtlasReview-${version}-windows-x64-setup.exe.sig`);
   }
 
   if (copied.length === 0) {

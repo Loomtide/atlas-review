@@ -1357,7 +1357,7 @@ function ProviderSelector({ context, toolCapableOnly = false }: ProviderSelector
               marginTop: 'var(--space-3)',
               lineHeight: 1.5,
             }}>
-              Keys are stored locally (encrypted) and never sent to AtlasEngine servers.
+              Keys are stored locally (encrypted) and never sent to AtlasReview servers.
             </div>
           </div>
         )}
@@ -5920,7 +5920,7 @@ function GeneralSection() {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
                 <div style={{ fontSize: 'var(--text-sm)', fontWeight: 500, color: 'var(--text-primary)' }}>
-                  Open AtlasEngine to
+                  Open AtlasReview to
                 </div>
                 <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', marginTop: 2 }}>
                   Choose which tab to show when the app starts
@@ -7048,8 +7048,8 @@ function CloudSection() {
 // About Section
 // ---------------------------------------------------------------------------
 
-const SUPPORT_URL = 'mailto:support@atlasengine.dev';
-const LICENSE_PATH = 'https://atlasengine.dev/LICENSE.txt';
+const SUPPORT_URL = 'mailto:contact@loomtide.ai';
+const LICENSE_PATH = 'https://github.com/Loomtide/atlas-review/blob/main/LICENSE';
 const DISCORD_INVITE_URL = 'https://discord.gg/tyMsmCnf';
 
 function AboutSection() {
@@ -7089,13 +7089,20 @@ function AboutSection() {
     setIsChecking(true);
     setUpdateStatus(null);
 
-    // NOTE: When @tauri-apps/plugin-updater is added as a dependency,
-    // this can be replaced with: const { check } = await import('@tauri-apps/plugin-updater');
-    // For now, show a generic message in both web and Tauri modes.
-    await new Promise(resolve => setTimeout(resolve, 500)); // Brief pause for UX
-    setUpdateStatus('You are on the latest version.');
+    try {
+      if (!isTauri) {
+        setUpdateStatus('Desktop updates are available in the installed application.');
+        return;
+      }
+      const { emit } = await import('@tauri-apps/api/event');
+      await emit('menu-check-for-updates');
+      setUpdateStatus('See the update notification for the result.');
+    } catch {
+      setUpdateStatus('Unable to check for updates. Please try again.');
+    } finally {
+      setIsChecking(false);
+    }
 
-    setIsChecking(false);
   }, []);
 
   const openLink = useCallback((url: string) => {
@@ -7138,7 +7145,7 @@ function AboutSection() {
           fontWeight: 700,
           color: 'var(--text-primary)',
         }}>
-          AtlasEngine
+          AtlasReview
         </div>
         <div style={{
           fontSize: 'var(--text-sm)',
@@ -7186,14 +7193,14 @@ function AboutSection() {
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>Website</span>
-          <button type="button" onClick={() => openLink('https://atlasengine.dev')} style={linkStyle}>
-            atlasengine.dev
+          <button type="button" onClick={() => openLink('https://loomtide.ai/atlasreview')} style={linkStyle}>
+            loomtide.ai/atlasreview
           </button>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>Documentation</span>
-          <button type="button" onClick={() => openLink('https://docs.atlasengine.dev')} style={linkStyle}>
-            docs.atlasengine.dev
+          <button type="button" onClick={() => openLink('https://github.com/Loomtide/atlas-review#readme')} style={linkStyle}>
+            GitHub documentation
           </button>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -7205,7 +7212,7 @@ function AboutSection() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>Support</span>
           <button type="button" onClick={() => openLink(SUPPORT_URL)} style={linkStyle}>
-            support@atlasengine.dev
+            contact@loomtide.ai
           </button>
         </div>
       </div>

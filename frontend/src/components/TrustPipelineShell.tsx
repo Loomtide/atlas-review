@@ -534,14 +534,14 @@ function TrustPipelineShell({
             onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--bg-surface-raised)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
           >
-            <img src={atlasLogo} alt="AtlasEngine" style={{ width: 20, height: 20 }} />
+            <img src={atlasLogo} alt="AtlasReview" style={{ width: 20, height: 20 }} />
             <span style={{
               fontSize: 'var(--text-sm)',
               fontWeight: 600,
               color: 'var(--text-primary)',
               whiteSpace: 'nowrap',
             }}>
-              AtlasEngine
+              AtlasReview
             </span>
           </button>
         </div>

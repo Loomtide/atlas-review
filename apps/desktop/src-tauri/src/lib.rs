@@ -1,6 +1,6 @@
-//! AtlasEngine Desktop - Native Tauri wrapper for AtlasEngine
+//! AtlasReview Desktop - Native Tauri wrapper for AtlasReview
 //!
-//! This is a thin WebView wrapper that loads the AtlasEngine UI.
+//! This is a thin WebView wrapper that loads the AtlasReview UI.
 //! In development mode, it connects to the Vite dev server.
 //! In production mode, it serves bundled web assets and starts
 //! the Node.js backend automatically.
@@ -44,8 +44,8 @@ const CLOUD_SETTINGS_MENU_ID: &str = "cloud_settings";
 const WEBSITE_MENU_ID: &str = "atlasengine_website";
 const DOCUMENTATION_MENU_ID: &str = "atlasengine_documentation";
 const DISCORD_MENU_ID: &str = "atlasengine_discord";
-const ATLASENGINE_WEBSITE_URL: &str = "https://www.atlasengine.dev/";
-const ATLASENGINE_DOCUMENTATION_URL: &str = "https://docs.atlasengine.dev/";
+const ATLASENGINE_WEBSITE_URL: &str = "https://loomtide.ai/atlasreview";
+const ATLASENGINE_DOCUMENTATION_URL: &str = "https://github.com/Loomtide/atlas-review#readme";
 const ATLASENGINE_DISCORD_URL: &str = "https://discord.gg/tyMsmCnf";
 
 fn set_menu_item_enabled_recursive<R: Runtime>(
@@ -374,7 +374,7 @@ pub fn run() {
                         .build(app)?,
                     )
                     .separator()
-                    .item(&MenuItemBuilder::with_id(ABOUT_MENU_ID, "About AtlasEngine").build(app)?)
+                    .item(&MenuItemBuilder::with_id(ABOUT_MENU_ID, "About AtlasReview").build(app)?)
                     .separator()
                     .item(&PredefinedMenuItem::quit(app, Some("Quit Atlas"))?)
                     .build()?
@@ -409,15 +409,15 @@ pub fn run() {
 
             let help_menu = SubmenuBuilder::new(app, "Help")
                 .item(&MenuItemBuilder::with_id(DOCUMENTATION_MENU_ID, "Documentation").build(app)?)
-                .item(&MenuItemBuilder::with_id(WEBSITE_MENU_ID, "AtlasEngine Website").build(app)?)
+                .item(&MenuItemBuilder::with_id(WEBSITE_MENU_ID, "AtlasReview Website").build(app)?)
                 .item(&MenuItemBuilder::with_id(DISCORD_MENU_ID, "Join Discord").build(app)?)
                 .build()?;
 
             if cfg!(target_os = "macos") {
-                let app_menu = SubmenuBuilder::new(app, "AtlasEngine")
+                let app_menu = SubmenuBuilder::new(app, "AtlasReview")
                     .item(&PredefinedMenuItem::about(
                         app,
-                        Some("About AtlasEngine"),
+                        Some("About AtlasReview"),
                         None,
                     )?)
                     .separator()
@@ -435,11 +435,11 @@ pub fn run() {
                             .build(app)?,
                     )
                     .separator()
-                    .item(&PredefinedMenuItem::hide(app, Some("Hide AtlasEngine"))?)
+                    .item(&PredefinedMenuItem::hide(app, Some("Hide AtlasReview"))?)
                     .item(&PredefinedMenuItem::hide_others(app, Some("Hide Others"))?)
                     .item(&PredefinedMenuItem::show_all(app, Some("Show All"))?)
                     .separator()
-                    .item(&PredefinedMenuItem::quit(app, Some("Quit AtlasEngine"))?)
+                    .item(&PredefinedMenuItem::quit(app, Some("Quit AtlasReview"))?)
                     .build()?;
 
                 Menu::with_items(
@@ -477,17 +477,17 @@ pub fn run() {
             }
             WEBSITE_MENU_ID => {
                 if let Err(err) = app.opener().open_url(ATLASENGINE_WEBSITE_URL, None::<&str>) {
-                    log::warn!("Failed to open AtlasEngine website: {}", err);
+                    log::warn!("Failed to open AtlasReview website: {}", err);
                 }
             }
             ABOUT_MENU_ID => {
                 let version = app.package_info().version.to_string();
                 app.dialog()
                     .message(format!(
-                        "AtlasEngine\nVersion {}\nhttps://www.atlasengine.dev/",
+                        "AtlasReview\nVersion {}\nhttps://loomtide.ai/atlasreview",
                         version
                     ))
-                    .title("About AtlasEngine")
+                    .title("About AtlasReview")
                     .kind(MessageDialogKind::Info)
                     .show(|_| {});
             }
@@ -496,12 +496,12 @@ pub fn run() {
                     .opener()
                     .open_url(ATLASENGINE_DOCUMENTATION_URL, None::<&str>)
                 {
-                    log::warn!("Failed to open AtlasEngine documentation: {}", err);
+                    log::warn!("Failed to open AtlasReview documentation: {}", err);
                 }
             }
             DISCORD_MENU_ID => {
                 if let Err(err) = app.opener().open_url(ATLASENGINE_DISCORD_URL, None::<&str>) {
-                    log::warn!("Failed to open AtlasEngine Discord: {}", err);
+                    log::warn!("Failed to open AtlasReview Discord: {}", err);
                 }
             }
             _ => {}
@@ -518,7 +518,7 @@ pub fn run() {
                     log_builder
                         .target(tauri_plugin_log::Target::new(
                             tauri_plugin_log::TargetKind::Folder {
-                                path: app.path().app_data_dir().unwrap_or_default(),
+                                path: backend::desktop_data_dir(app.handle()).unwrap_or_default(),
                                 file_name: Some("atlasengine".into()),
                             },
                         ))

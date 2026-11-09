@@ -6,7 +6,7 @@ set -euo pipefail
 #
 # Usage:
 #   ./scripts/release-mac.sh              # auto-reads version from tauri.conf.json
-#   ./scripts/release-mac.sh 0.24.0       # explicit version (also bumps files)
+#   ./scripts/release-mac.sh 0.25.27      # verify the committed version
 #   ./scripts/release-mac.sh --build-only # build without publishing
 #
 # Prerequisites:
@@ -37,28 +37,18 @@ if [ -z "$VERSION" ]; then
   VERSION=$(python3 -c "import json; print(json.load(open('src-tauri/tauri.conf.json'))['version'])")
   echo "Using current version: $VERSION"
 else
-  # Bump version in both files
-  python3 -c "
-import json
-for f in ['src-tauri/tauri.conf.json', 'package.json']:
-    with open(f, 'r') as fh: c = json.load(fh)
-    c['version'] = '$VERSION'
-    with open(f, 'w') as fh: json.dump(c, fh, indent=2); fh.write('\n')
-print('Bumped to $VERSION')
-"
-  cd "$PROJECT_ROOT"
-  git add apps/desktop/src-tauri/tauri.conf.json apps/desktop/package.json
-  git commit -m "chore: bump desktop version to $VERSION" || true
-  git push || true
-  git push origin HEAD:main 2>/dev/null || true
-  cd "$DESKTOP_DIR"
+  CURRENT_VERSION=$(python3 -c "import json; print(json.load(open('src-tauri/tauri.conf.json'))['version'])")
+  if [ "$VERSION" != "$CURRENT_VERSION" ]; then
+    echo "Update all version files and commit them before building $VERSION." >&2
+    exit 1
+  fi
 fi
 
 STAGING="$PROJECT_ROOT/release-staging/$VERSION"
 
 echo ""
 echo "========================================="
-echo "  Building AtlasEngine v$VERSION (Mac)"
+echo "  Building AtlasReview v$VERSION (Mac)"
 echo "========================================="
 echo ""
 
@@ -87,5 +77,5 @@ npm run release:local:publish -- --version "$VERSION" --artifacts-dir "$STAGING"
 echo ""
 echo "========================================="
 echo "  ✅ v$VERSION released!"
-echo "  https://github.com/AvinashP/AtlasEngineRelease/releases/tag/v$VERSION"
+echo "  https://github.com/Loomtide/atlas-review/releases/tag/v$VERSION"
 echo "========================================="

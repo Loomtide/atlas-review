@@ -218,7 +218,7 @@ export function BackendLoader({ children }: BackendLoaderProps) {
 
           {/* Status text */}
           <h1 className="text-xl font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>
-            AtlasEngine
+            AtlasReview
           </h1>
           <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
             {status === 'idle'

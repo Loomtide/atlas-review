@@ -1538,7 +1538,7 @@ function SettingsPanel({ projectId, projectName, onProjectRenamed, onProjectDele
             </div>
 
             <p className="text-sm text-content-secondary mb-6">
-              AtlasEngine uses an AI provider to review code changes. It can auto-detect credentials from installed CLI tools, or you can add an API key manually.
+              AtlasReview uses an AI provider to review code changes. It can auto-detect credentials from installed CLI tools, or you can add an API key manually.
             </p>
 
             {/* Active Provider */}

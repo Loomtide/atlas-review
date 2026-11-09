@@ -239,25 +239,25 @@ jobs:
           # DMG file
           DMG_FILE=$(find "$BUNDLE_DIR/dmg" -name "*.dmg" -type f 2>/dev/null | head -1)
           if [ -n "$DMG_FILE" ]; then
-            cp "$DMG_FILE" "artifacts/AtlasEngine-${VERSION}-macos-${ARCH}.dmg"
+            cp "$DMG_FILE" "artifacts/AtlasReview-${VERSION}-macos-${ARCH}.dmg"
           fi
 
           # Zipped app bundle fallback for Intel macOS releases
           APP_BUNDLE=$(find "$BUNDLE_DIR/macos" -maxdepth 1 -name "*.app" -type d 2>/dev/null | head -1)
           if [ "${{ matrix.installer_ext }}" = "zip" ] && [ -n "$APP_BUNDLE" ]; then
-            ditto -c -k --sequesterRsrc --keepParent "$APP_BUNDLE" "artifacts/AtlasEngine-${VERSION}-macos-${ARCH}.zip"
+            ditto -c -k --sequesterRsrc --keepParent "$APP_BUNDLE" "artifacts/AtlasReview-${VERSION}-macos-${ARCH}.zip"
           fi
 
           # App tarball for updater
           APP_TAR=$(find "$BUNDLE_DIR/macos" -name "*.app.tar.gz" -type f 2>/dev/null | head -1)
           if [ -n "$APP_TAR" ]; then
-            cp "$APP_TAR" "artifacts/AtlasEngine_${VERSION}_${ARCH}.app.tar.gz"
+            cp "$APP_TAR" "artifacts/AtlasReview_${VERSION}_${ARCH}.app.tar.gz"
           fi
 
           # Signature file
           SIG_FILE=$(find "$BUNDLE_DIR/macos" -name "*.app.tar.gz.sig" -type f 2>/dev/null | head -1)
           if [ -n "$SIG_FILE" ]; then
-            cp "$SIG_FILE" "artifacts/AtlasEngine_${VERSION}_${ARCH}.app.tar.gz.sig"
+            cp "$SIG_FILE" "artifacts/AtlasReview_${VERSION}_${ARCH}.app.tar.gz.sig"
           fi
 
           echo "artifact_dir=artifacts" >> $GITHUB_OUTPUT
@@ -421,19 +421,19 @@ jobs:
           # MSI installer
           MSI_FILE=$(find "$BUNDLE_DIR/msi" -name "*.msi" -type f 2>/dev/null | head -1)
           if [ -n "$MSI_FILE" ]; then
-            cp "$MSI_FILE" "artifacts/AtlasEngine-${VERSION}-windows-x64.msi"
+            cp "$MSI_FILE" "artifacts/AtlasReview-${VERSION}-windows-x64.msi"
           fi
 
           # NSIS installer
           NSIS_FILE=$(find "$BUNDLE_DIR/nsis" -name "*.exe" -type f 2>/dev/null | head -1)
           if [ -n "$NSIS_FILE" ]; then
-            cp "$NSIS_FILE" "artifacts/AtlasEngine-${VERSION}-windows-x64-setup.exe"
+            cp "$NSIS_FILE" "artifacts/AtlasReview-${VERSION}-windows-x64-setup.exe"
           fi
 
           # Updater signature file
           SIG_FILE=$(find "$BUNDLE_DIR/nsis" -name "*.exe.sig" -type f 2>/dev/null | head -1)
           if [ -n "$SIG_FILE" ]; then
-            cp "$SIG_FILE" "artifacts/AtlasEngine-${VERSION}-windows-x64-setup.exe.sig"
+            cp "$SIG_FILE" "artifacts/AtlasReview-${VERSION}-windows-x64-setup.exe.sig"
           fi
 
           echo "artifact_dir=artifacts" >> $GITHUB_OUTPUT

@@ -25,6 +25,7 @@
   FileWrite $1 "$$lockTargets += (Join-Path $$installDir 'node.exe')$\r$\n"
   FileWrite $1 "function Get-AtlasProcesses {$\r$\n"
   FileWrite $1 "  Get-CimInstance Win32_Process | Where-Object {$\r$\n"
+  FileWrite $1 "    ($$_.Name -eq 'AtlasReview.exe') -or$\r$\n"
   FileWrite $1 "    ($$_.Name -eq 'AtlasEngine.exe') -or$\r$\n"
   FileWrite $1 "    ($$_.Name -eq 'atlasengine-desktop.exe') -or$\r$\n"
   FileWrite $1 "    ($$_.Name -eq 'node.exe' -and ($\r$\n"
@@ -56,4 +57,18 @@
   FileClose $1
   nsExec::ExecToLog `"$WINDIR\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -File "$PLUGINSDIR\atlas-preinstall.ps1" -InstallDir "$INSTDIR"`
   Pop $0 ; discard exit code (0 = success, non-zero = PowerShell unavailable)
+!macroend
+
+; Remove old branded shortcuts only when they point at this installation.
+!macro NSIS_HOOK_POSTINSTALL
+  !insertmacro IsShortcutTarget "$SMPROGRAMS\AtlasEngine.lnk" "$INSTDIR\${MAINBINARYNAME}.exe"
+  Pop $0
+  ${If} $0 = 1
+    Delete "$SMPROGRAMS\AtlasEngine.lnk"
+  ${EndIf}
+  !insertmacro IsShortcutTarget "$DESKTOP\AtlasEngine.lnk" "$INSTDIR\${MAINBINARYNAME}.exe"
+  Pop $0
+  ${If} $0 = 1
+    Delete "$DESKTOP\AtlasEngine.lnk"
+  ${EndIf}
 !macroend

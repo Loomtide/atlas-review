@@ -12,7 +12,7 @@ import { randomUUID } from 'crypto';
 import path from 'path';
 import fs from 'fs/promises';
 import { createWriteStream } from 'fs';
-import archiver from 'archiver';
+import { ZipArchive } from 'archiver';
 import db from '../db/index.js';
 import gitService from './gitService.js';
 import changesetService from './changesetService.js';
@@ -368,7 +368,7 @@ async function executeExport(projectPath, changesetId, projectId, options = {}) 
 
     await new Promise((resolve, reject) => {
       const output = createWriteStream(zipPath);
-      const archive = archiver('zip', { zlib: { level: 9 } });
+      const archive = new ZipArchive({ zlib: { level: 9 } });
 
       output.on('close', resolve);
       archive.on('error', reject);

@@ -56,7 +56,7 @@ function parseArgs(argv) {
 }
 
 function printHelp() {
-  console.log('AtlasEngine Desktop Clean Install Launcher');
+  console.log('AtlasReview Desktop Clean Install Launcher');
   console.log('');
   console.log('Launches the desktop app in an isolated temp HOME with CLI detection disabled.');
   console.log('Useful for testing the first-run setup wizard and initial CLI install flow.');
