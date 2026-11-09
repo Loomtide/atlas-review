@@ -2,7 +2,7 @@
 
 Audit date: 2026-11-09. These results describe the checked lockfiles and supported targets, not a guarantee that the application has no vulnerabilities.
 
-Backend, frontend, MCP server, and desktop npm audits report zero advisories, including development dependencies. Multer is updated to the patched 2.x series, UUID to 11.1.1, and Archiver to 8.x. ZIP export uses the new ZipArchive API and has an integration regression check. Overrides for Glob and Minimatch apply only to the affected newer major versions, retaining the older API expected by legacy development tools. Rust bytes is updated to 1.11.1.
+Backend, frontend, MCP server, and desktop npm audits report zero advisories, including development dependencies. Multer is updated to the patched 2.x series, UUID to 11.1.1, and Archiver to 8.x. ZIP export uses the new ZipArchive API and has an integration regression check. Overrides for Glob and Minimatch apply only to the affected newer major versions, retaining the older API expected by legacy development tools. The Rust lockfile is refreshed, including Tauri 2.12.5, ZIP 9.5.0, Rustls 0.23.46, rustls-webpki 0.103.16, Serde With 3.24.0, Tar 0.4.46, and Time 0.3.55. The affected older Rand dependency chain is removed. Tauri CLI and its vendored NSIS template are updated together to 2.12.4.
 
 ## Remaining upstream Linux advisory
 

@@ -29,7 +29,7 @@ A legacy release mirrored for download continuity must explicitly identify its o
 
 On Mac, the updater replaces the contents of the installed app at its existing path. It does not rename an existing AtlasEngine.app directory. A manual installation of AtlasReview.app changes the Finder name. Quit the old app first and keep only one active copy. Both names use the same existing profile; do not delete Application Support when replacing the application.
 
-Windows MSI retains upgrade code `cd5cbea9-357e-5ffc-800c-5ed5759fd6c6`, derived from the previous product name. NSIS uses the pinned Tauri CLI 2.10.0 template in `apps/desktop/src-tauri/windows/installer.nsi`, retaining the AtlasEngine registry keys while displaying AtlasReview. Review this template against upstream when upgrading the CLI. The template is distributed under its included MIT license. Old shortcuts pointing at the same installation are removed after installation.
+Windows MSI retains upgrade code `cd5cbea9-357e-5ffc-800c-5ed5759fd6c6`, derived from the previous product name. NSIS uses the pinned Tauri CLI 2.12.4 template in `apps/desktop/src-tauri/windows/installer.nsi`, retaining the AtlasEngine registry keys while displaying AtlasReview. Review this template against upstream when upgrading the CLI. The template is distributed under its included MIT license. Old shortcuts pointing at the same installation are removed after installation.
 
 Before publishing, test both EXE and MSI fresh installations and upgrades from 0.25.26 on Windows. Confirm one installed-app entry, working shortcuts, preserved projects/provider settings, backend shutdown, and updater behavior. These checks require a Windows machine.
 

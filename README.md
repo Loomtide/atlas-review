@@ -113,7 +113,7 @@ Development shares the existing app data directory by default. Set `ATLAS_DATA_D
 <details>
 <summary><strong>Build a desktop installer</strong></summary>
 
-Install Rust and the [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/). After `npm run setup`:
+Install Rust 1.90 or newer and the [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/). After `npm run setup`:
 
 ```sh
 npm run desktop:build:unsigned

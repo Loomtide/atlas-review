@@ -27,7 +27,7 @@ This verifies local data loading, not every saved provider credential or every h
 - Fresh-install database initialization passed.
 - Bundled backend: healthy startup, Git project import, valid multipart upload, and malformed-upload recovery passed.
 - Backend, frontend, MCP server, and desktop npm audits reported zero advisories, including development dependencies.
-- Rust bytes was patched. The upstream Linux-only glib advisory remains documented in DEPENDENCY_STATUS.md.
+- GitHub refreshed its Rust dependency graph after the first source push and reported additional advisories. The Rust lockfile was then refreshed to patched Tauri, ZIP, TLS, archive, and serialization dependencies. See DEPENDENCY_STATUS.md for versions and the remaining upstream Linux-only glib advisory.
 
 ## Installer scope
 
